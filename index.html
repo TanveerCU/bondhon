@@ -16,7 +16,7 @@
    the end of the thread.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,450;0,9..144,600;1,9..144,450;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Amiri:wght@400;700&display=swap');
 
 :root{
   /* --- surfaces (light) --- */
@@ -419,14 +419,46 @@ p{ margin:0; }
   .search-cta{ width:auto; flex:0 0 auto; padding:14px 28px; margin-top:0; }
 }
 
-.quick-chips{ position:relative; z-index:1; display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; align-items:center; }
-.quick-chips .chip-label{ font-family:var(--mono); font-size:11.5px; color:var(--muted); margin-right:2px; }
-.chip{
-  font-family:var(--body); font-size:13px; font-weight:600; color:var(--ink-dim);
-  padding:8px 16px; border-radius:100px; border:1px solid var(--line-strong); background:#fff;
-  display:inline-flex; align-items:center; gap:6px; transition:transform .3s var(--ease), border-color .3s ease, background .3s ease;
+.popular-label{
+  position:relative; z-index:1; display:block; margin-top:34px; margin-bottom:12px;
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted);
 }
-.chip:hover{ transform:translateY(-2px); border-color:var(--marigold); background:var(--paper-2); }
+.popular-tiles{ position:relative; z-index:1; display:flex; flex-direction:column; gap:10px; }
+@media (min-width:760px){ .popular-tiles{ flex-direction:row; gap:14px; } }
+.popular-tile{
+  display:flex; align-items:center; gap:12px; flex:1; cursor:pointer;
+  padding:13px 18px; border-radius:100px; background:var(--paper-2); border:1px solid var(--line);
+  position:relative; transition:background .3s ease, border-color .3s ease, transform .3s var(--ease), box-shadow .3s ease;
+}
+.popular-tile:hover{ transform:translateY(-2px); box-shadow:0 14px 28px -20px rgba(20,35,42,.3); }
+.popular-tile .tile-icon{ width:19px; height:19px; flex:0 0 auto; transition:transform .3s var(--ease); }
+.popular-tile:hover .tile-icon{ transform:scale(1.1); }
+.popular-tile-text{ display:flex; flex-direction:column; gap:1px; min-width:0; overflow:hidden; }
+.popular-tile-text b{ font-size:14px; font-weight:600; color:var(--ink); font-family:var(--body); white-space:nowrap; }
+.popular-tile-text small{ font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.03em; white-space:nowrap; }
+
+.popular-tile.tile-gold{ background:rgba(201,134,47,.09); border-color:rgba(201,134,47,.28); }
+.popular-tile.tile-gold .tile-icon{ color:var(--marigold-dim); }
+.popular-tile.tile-gold:hover{ background:rgba(201,134,47,.15); border-color:var(--marigold-dim); }
+
+.popular-tile.tile-jade{ background:rgba(31,143,111,.09); border-color:rgba(31,143,111,.28); }
+.popular-tile.tile-jade .tile-icon{ color:var(--jade); }
+.popular-tile.tile-jade:hover{ background:rgba(31,143,111,.15); border-color:var(--jade); }
+
+.popular-tile.tile-terracotta{ background:rgba(224,82,44,.09); border-color:rgba(224,82,44,.28); }
+.popular-tile.tile-terracotta .tile-icon{ color:var(--terracotta); }
+.popular-tile.tile-terracotta:hover{ background:rgba(224,82,44,.15); border-color:var(--terracotta); }
+
+.popular-tile.is-departing .tile-icon,
+.popular-tile.is-departing .popular-tile-text{ opacity:0; transition:opacity .25s ease; }
+
+/* the icon briefly becomes a plane and flies off toward the page it opens */
+.fly-plane{
+  position:fixed; z-index:400; pointer-events:none; color:var(--marigold-dim);
+  transition:transform .85s cubic-bezier(.4,0,.2,1), opacity .85s ease;
+  will-change:transform, opacity;
+}
+.fly-plane svg{ width:100%; height:100%; display:block; }
 
 /* ==========================================================================
    SECTIONS / GRID / CARDS
@@ -810,6 +842,25 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
 @media (prefers-reduced-motion: reduce){ .tawaf-ring{ animation:none; } }
 
 .holy-copy .pill-tag{ margin-bottom:24px; }
+
+.arabic-label{
+  display:block; font-family:'Amiri', serif; direction:rtl; font-size:1.4rem; color:var(--marigold-dim);
+  margin:6px 0 18px; line-height:1.4;
+}
+.hero .arabic-label{ display:inline-block; margin:0 0 0 14px; font-size:1.6rem; vertical-align:middle; }
+
+.bismillah{
+  font-family:'Amiri', serif; direction:rtl; font-size:clamp(1.7rem,3.4vw,2.4rem);
+  color:var(--jade-dim); margin-bottom:18px; line-height:1.3;
+}
+
+/* ---------- desert caravan strip — a visible nod to the journey through sand ---------- */
+.caravan-strip{
+  height:150px; width:100%; overflow:hidden; position:relative;
+  background:linear-gradient(180deg, #f2e4c8, var(--paper-3));
+}
+.caravan-strip svg{ position:absolute; bottom:0; left:0; width:100%; height:100%; }
+@media (min-width:760px){ .caravan-strip{ height:190px; } }
 .holy-copy h2{ margin-bottom:16px; }
 .holy-copy p{ color:var(--ink-dim); font-size:15px; line-height:1.75; }
 
@@ -999,13 +1050,20 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
         <button type="button" class="btn btn-primary search-cta" id="heroSearchGo">Search</button>
       </div>
 
-      <div class="quick-chips reveal">
-        <span class="chip-label">Popular:</span>
-        <a href="#umrah" data-nav="umrah" class="chip">🕋 <span>Umrah Packages</span></a>
-        <a href="#bangladesh" data-nav="bangladesh" class="chip">🏖️ <span>Cox's Bazar</span></a>
-        <a href="#destinations" data-nav="destinations" class="chip">🛕 <span>Thailand</span></a>
-        <a href="#destinations:visa-hub" data-nav="destinations" data-anchor="visa-hub" class="chip">🎓 <span>Student Visa</span></a>
-        <a href="#destinations" data-nav="destinations" class="chip">🏝️ <span>Maldives</span></a>
+      <span class="popular-label">Popular</span>
+      <div class="popular-tiles reveal">
+        <a href="#destinations" data-nav="destinations" class="popular-tile tile-gold" data-fly>
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.5"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18" stroke="currentColor" stroke-width="1.2"/></svg>
+          <span class="popular-tile-text"><b>World Tours &amp; Air Tickets</b><small>Every country, every route</small></span>
+        </a>
+        <a href="#bangladesh" data-nav="bangladesh" class="popular-tile tile-jade" data-fly>
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><path d="M12 21s7-6.5 7-11.5A7 7 0 0 0 5 9.5C5 14.5 12 21 12 21z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="9.5" r="2.2" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="popular-tile-text"><b>Discover Bangladesh</b><small>Culture, heritage &amp; nature</small></span>
+        </a>
+        <a href="#umrah" data-nav="umrah" class="popular-tile tile-terracotta" data-fly>
+          <svg class="tile-icon" viewBox="0 0 24 24" fill="none"><rect x="5" y="7" width="14" height="14" rx="1.3" stroke="currentColor" stroke-width="1.5"/><rect x="6.2" y="12.2" width="11.6" height="3.6" fill="currentColor"/></svg>
+          <span class="popular-tile-text"><b>Hajj &amp; Umrah</b><small>A journey held with care</small></span>
+        </a>
       </div>
     </div>
   </section>
@@ -1502,12 +1560,13 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
   <section class="hero page-hero" id="top-umrah">
     <canvas id="umrahJourney" class="network-canvas"></canvas>
     <div class="hero-inner wrap">
-      <svg width="46" height="46" viewBox="0 0 46 46" fill="none" style="margin-bottom:18px;" aria-hidden="true">
+      <svg width="46" height="46" viewBox="0 0 46 46" fill="none" style="margin-bottom:14px;" aria-hidden="true">
         <path d="M23 3L31 15L23 27L15 15Z" stroke="#c9862f" stroke-width="1.3"/>
         <path d="M23 19L33 27L23 35L13 27Z" stroke="#2e6455" stroke-width="1.3"/>
       </svg>
+      <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
       <span class="eyebrow">Home → Makkah → Madinah</span>
-      <h1 style="max-width:16ch;">Your journey to<br><em>Umrah begins here.</em></h1>
+      <h1 style="max-width:16ch;">Your journey to<br><em>Umrah begins here.</em> <span class="arabic-label">العمرة</span></h1>
       <p class="lede mt-lg">Visa, flights, Haram-side hotels and a dedicated Mutawwif — planned as a single, unhurried journey, not four separate bookings.</p>
       <div class="hero-cta-row">
         <a href="#home:contact" data-nav="home" data-anchor="contact" class="btn btn-primary">Plan my Umrah</a>
@@ -1515,6 +1574,54 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
       </div>
     </div>
   </section>
+
+  <div class="caravan-strip" aria-hidden="true">
+    <svg viewBox="0 0 1200 190" preserveAspectRatio="xMidYMax slice" fill="none">
+      <!-- sky glow + crescent moon -->
+      <circle cx="1080" cy="42" r="22" fill="#c9862f" opacity=".28"/>
+      <path d="M1080 26a18 18 0 1 0 14 30 22 22 0 0 1-14-30z" fill="#c9862f" opacity=".7"/>
+
+      <!-- far dune -->
+      <path d="M0 140q150-40 300-10t300 5 300-15 300 10v60H0z" fill="#c9862f" opacity=".18"/>
+      <!-- near dune -->
+      <path d="M0 165q120-30 260-8t280 4 300-10 360 8v40H0z" fill="#a06a24" opacity=".3"/>
+
+      <!-- date palms -->
+      <g fill="#8a5a1f">
+        <rect x="95" y="70" width="7" height="70"/>
+        <path d="M98 70c-16-10-34-6-44 6 14 4 28 2 44-6zM98 70c16-10 34-6 44 6-14 4-28 2-44-6zM98 70c-3-18 4-28 4-28s9 10 4 28zM98 70c-14-6-19-22-15-32 11 3 18 15 15 32zM98 70c14-6 19-22 15-32-11 3-18 15-15 32z"/>
+        <ellipse cx="98" cy="60" rx="10" ry="6" fill="#c9862f" opacity=".8"/>
+      </g>
+      <g fill="#8a5a1f" opacity=".85">
+        <rect x="1085" y="82" width="6" height="58"/>
+        <path d="M1088 82c-13-8-27-5-35 5 11 3 22 2 35-5zM1088 82c13-8 27-5 35 5-11 3-22 2-35-5zM1088 82c-2-14 3-22 3-22s7 8 3 22zM1088 82c-11-5-15-17-12-25 9 2 14 12 12 25zM1088 82c11-5 15-17 12-25-9 2-14 12-12 25z"/>
+      </g>
+      <g fill="#a06a24" opacity=".6">
+        <rect x="1140" y="95" width="5" height="45"/>
+        <path d="M1142 95c-10-6-21-4-27 4 9 3 18 1 27-4zM1142 95c10-6 21-4 27 4-9 3-18 1-27-4zM1142 95c-2-11 2-17 2-17s6 6 2 17z"/>
+      </g>
+
+      <!-- camel caravan, walking toward Makkah -->
+      <g fill="#5c4a3a" opacity=".85">
+        <path d="M370 140v-22c0-8 6-13 13-13 2-9 11-13 18-9 4-13 18-17 26-9 6-4 13 1 13 7l4 7c6 0 11 4 11 11v28z"/>
+        <path d="M410 84c2-6 9-6 11 0l4 13h-18z"/>
+        <rect x="418" y="72" width="16" height="10" rx="2" fill="#c9862f" opacity=".9"/>
+        <circle cx="386" cy="140" r="6"/><circle cx="428" cy="140" r="6"/><circle cx="452" cy="140" r="6"/>
+      </g>
+      <g fill="#5c4a3a" opacity=".7">
+        <path d="M480 140v-18c0-7 5-11 11-11 2-7 9-11 15-7 3-11 15-14 22-7 5-3 11 1 11 6l3 6c5 0 9 3 9 9v22z"/>
+        <path d="M513 92c2-5 8-5 9 0l3 11h-15z"/>
+        <circle cx="493" cy="140" r="5"/><circle cx="528" cy="140" r="5"/><circle cx="548" cy="140" r="5"/>
+      </g>
+      <g fill="#5c4a3a" opacity=".55">
+        <path d="M565 140v-14c0-5 4-9 9-9 1-6 7-9 12-6 2-8 12-11 17-6 4-2 9 1 9 5l2 5c4 0 7 3 7 7v18z"/>
+        <path d="M591 100c1-4 6-4 7 0l3 8h-12z"/>
+        <circle cx="576" cy="140" r="4"/><circle cx="604" cy="140" r="4"/><circle cx="620" cy="140" r="4"/>
+      </g>
+
+      <path d="M40 150q220-24 400-2t400 4 340-6" stroke="#a06a24" stroke-width="1" opacity=".3" fill="none"/>
+    </svg>
+  </div>
 
   <!-- ============ CHAIRMAN CALLOUT ============ -->
   <section class="section-tight">
@@ -1538,13 +1645,27 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
           <div class="tawaf-ring"></div>
           <div class="tawaf-ring ring-2"></div>
           <div class="tawaf-ring ring-3"></div>
-          <svg width="86" height="86" viewBox="0 0 86 86" fill="none" aria-hidden="true">
-            <rect x="26" y="26" width="34" height="34" fill="#16262d" opacity=".8"/>
-            <rect x="26" y="40" width="34" height="7" fill="#c9862f" opacity=".9"/>
+          <svg width="220" height="220" viewBox="0 0 200 200" fill="none" aria-hidden="true">
+            <path d="M30 30l6 6M164 30l-6 6M30 170l6-6M164 170l-6-6" stroke="#c9862f" stroke-width="1.4" opacity=".4"/>
+            <circle cx="168" cy="34" r="9" fill="#c9862f" opacity=".22"/>
+            <path d="M168 26a7 7 0 1 0 5.5 11.3 9 9 0 0 1-5.5-11.3z" fill="#c9862f" opacity=".55"/>
+            <rect x="38" y="38" width="124" height="124" fill="#16262d"/>
+            <rect x="38" y="38" width="124" height="124" fill="none" stroke="#0b1418" stroke-width="1"/>
+            <path d="M38 38l124 124M162 38 38 162" stroke="#0b1418" stroke-width=".5" opacity=".3"/>
+            <rect x="38" y="94" width="124" height="26" fill="#c9862f"/>
+            <g stroke="#16262d" stroke-width="1.6" opacity=".6">
+              <line x1="48" y1="107" x2="58" y2="107"/><line x1="66" y1="107" x2="76" y2="107"/>
+              <line x1="84" y1="107" x2="94" y2="107"/><line x1="102" y1="107" x2="112" y2="107"/>
+              <line x1="120" y1="107" x2="130" y2="107"/><line x1="138" y1="107" x2="148" y2="107"/>
+            </g>
+            <rect x="128" y="122" width="24" height="40" fill="#0b1418" stroke="#c9862f" stroke-width="2.2"/>
+            <path d="M128 122a12 10 0 0 1 24 0" fill="none" stroke="#c9862f" stroke-width="2.2"/>
+            <circle cx="46" cy="158" r="5" fill="#c9862f"/>
           </svg>
         </div>
         <div class="holy-copy">
           <span class="pill-tag">Makkah</span>
+          <span class="arabic-label">مكة المكرمة</span>
           <h2>The Kaaba,<br>the still centre.</h2>
           <p>Everything in Makkah turns toward one point — Masjid al-Haram and the Kaaba at its heart, where pilgrims circle in Tawaf. We arrange hotels within walking distance of the Haram, so the rhythm of your day can stay close to it, unrushed.</p>
         </div>
@@ -1552,17 +1673,25 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
 
       <div class="holy-section reverse reveal">
         <div class="holy-visual">
-          <svg width="140" height="90" viewBox="0 0 140 90" fill="none" aria-hidden="true">
-            <rect x="34" y="50" width="72" height="30" fill="#16262d" opacity=".7"/>
-            <path d="M34 50a36 26 0 0 1 72 0z" fill="#1f8f6f" opacity=".8"/>
-            <rect x="14" y="30" width="8" height="50" fill="#16262d" opacity=".6"/>
-            <path d="M14 30a4 6 0 0 1 8 0z" fill="#1f8f6f" opacity=".7"/>
-            <rect x="118" y="30" width="8" height="50" fill="#16262d" opacity=".6"/>
-            <path d="M118 30a4 6 0 0 1 8 0z" fill="#1f8f6f" opacity=".7"/>
+          <svg width="220" height="140" viewBox="0 0 220 140" fill="none" aria-hidden="true">
+            <rect x="45" y="82" width="130" height="46" fill="#16262d" opacity=".8"/>
+            <path d="M45 82a65 46 0 0 1 130 0z" fill="#1f8f6f" opacity=".9"/>
+            <path d="M45 82a65 46 0 0 1 130 0" fill="none" stroke="#c9862f" stroke-width="1.5" opacity=".7"/>
+            <circle cx="110" cy="30" r="3.5" fill="#c9862f"/>
+            <line x1="110" y1="36" x2="110" y2="22" stroke="#c9862f" stroke-width="1.6"/>
+            <rect x="15" y="46" width="14" height="82" fill="#16262d" opacity=".65"/>
+            <path d="M15 46a7 10 0 0 1 14 0z" fill="#1f8f6f" opacity=".8"/>
+            <rect x="191" y="46" width="14" height="82" fill="#16262d" opacity=".65"/>
+            <path d="M191 46a7 10 0 0 1 14 0z" fill="#1f8f6f" opacity=".8"/>
+            <g stroke="#c9862f" stroke-width="1" opacity=".4">
+              <line x1="60" y1="128" x2="60" y2="90"/><line x1="80" y1="128" x2="80" y2="88"/>
+              <line x1="140" y1="128" x2="140" y2="88"/><line x1="160" y1="128" x2="160" y2="90"/>
+            </g>
           </svg>
         </div>
         <div class="holy-copy">
           <span class="pill-tag">Madinah</span>
+          <span class="arabic-label">المدينة المنورة</span>
           <h2>The Green Dome,<br>a quieter pace.</h2>
           <p>After Makkah, most journeys settle into Madinah's calm — Masjid an-Nabawi and its Green Dome, gardens, and a gentler rhythm of prayer. We time your stay so Madinah feels like rest, not another leg of travel.</p>
         </div>
@@ -2210,6 +2339,54 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
 
     if(goBtn){ goBtn.addEventListener('click', goSearch); }
   })();
+
+  /* ---------------- Popular tiles: icon becomes a plane and flies off before navigating ---------------- */
+  document.querySelectorAll('a.popular-tile[data-fly]').forEach(function(tile){
+    tile.addEventListener('click', function(e){
+      if(tile.dataset.flying) return; // already mid-flight, ignore repeat clicks
+      e.preventDefault();
+      e.stopPropagation();
+      tile.dataset.flying = '1';
+
+      var icon = tile.querySelector('.tile-icon');
+      var rect = icon.getBoundingClientRect();
+
+      var plane = document.createElement('div');
+      plane.className = 'fly-plane';
+      plane.style.left = rect.left + 'px';
+      plane.style.top = rect.top + 'px';
+      plane.style.width = rect.width + 'px';
+      plane.style.height = rect.height + 'px';
+      plane.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16v-2l-8-5V3.5C14 2.67 13.33 2 12.5 2S11 2.67 11 3.5V9l-8 5v2l8-2.5V19l-2.5 1.5V22l3.5-1 3.5 1v-1.5L14 19v-6.5l8 2.5z"/></svg>';
+      document.body.appendChild(plane);
+
+      tile.classList.add('is-departing');
+
+      requestAnimationFrame(function(){
+        requestAnimationFrame(function(){
+          var flyX = window.innerWidth * 0.55;
+          var flyY = -window.innerHeight * 0.5;
+          plane.style.transform = 'translate(' + flyX + 'px,' + flyY + 'px) rotate(48deg) scale(.4)';
+          plane.style.opacity = '0';
+        });
+      });
+
+      var href = tile.getAttribute('href');
+      var navTarget = tile.dataset.nav;
+      var navAnchor = tile.dataset.anchor;
+
+      setTimeout(function(){
+        if(navTarget){
+          window.location.hash = navAnchor ? (navTarget + ':' + navAnchor) : navTarget;
+          plane.remove();
+          tile.classList.remove('is-departing');
+          delete tile.dataset.flying;
+        } else {
+          window.location.href = href;
+        }
+      }, 780);
+    });
+  });
 
   /* ---------------- Destinations & Visa: search + filter chips ---------------- */
   (function(){
@@ -2989,6 +3166,54 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
       ctx.restore();
     }
 
+    // a date palm — slender trunk, feathery fronds, a cluster of dates
+    function drawDatePalm(x,y,s){
+      ctx.save(); ctx.translate(x,y);
+      ctx.strokeStyle = 'rgba('+ink+',0.4)'; ctx.lineWidth = 2.2*s; ctx.lineCap='round';
+      ctx.beginPath(); ctx.moveTo(0,0); ctx.quadraticCurveTo(2*s,-14*s,0,-28*s); ctx.stroke();
+      ctx.fillStyle = 'rgba('+green+',0.45)';
+      for(var i=0;i<6;i++){
+        var ang = -Math.PI/2 + (i-2.5)*0.42;
+        var lx = Math.cos(ang)*17*s, ly = -28*s + Math.sin(ang)*11*s;
+        ctx.save();
+        ctx.translate(0,-28*s); ctx.rotate(ang+Math.PI/2);
+        ctx.beginPath(); ctx.ellipse(0, 9*s, 2.6*s, 9*s, 0, 0, Math.PI*2); ctx.fill();
+        ctx.restore();
+      }
+      ctx.fillStyle = 'rgba('+gold+',0.55)';
+      ctx.beginPath(); ctx.arc(0,-24*s,3*s,0,Math.PI*2); ctx.fill();
+      ctx.restore();
+    }
+
+    // a camel silhouette, walking
+    function drawCamel(x,y,s,step){
+      ctx.save(); ctx.translate(x,y); ctx.scale(s,s);
+      ctx.fillStyle = 'rgba('+ink+',0.32)';
+      ctx.beginPath();
+      ctx.moveTo(-16,4);
+      ctx.lineTo(-16,-6);
+      ctx.quadraticCurveTo(-14,-14,-8,-12);
+      ctx.quadraticCurveTo(-4,-18,0,-12);
+      ctx.quadraticCurveTo(4,-16,8,-10);
+      ctx.lineTo(14,-8);
+      ctx.lineTo(16,4);
+      ctx.lineTo(12,4);
+      ctx.lineTo(11,-2);
+      ctx.lineTo(9,4);
+      ctx.lineTo(4,4);
+      ctx.lineTo(3, Math.sin(step)>0 ? -1 : 4);
+      ctx.lineTo(-2,4);
+      ctx.lineTo(-3, Math.sin(step)>0 ? 4 : -1);
+      ctx.lineTo(-9,4);
+      ctx.closePath();
+      ctx.fill();
+      // head + neck
+      ctx.beginPath();
+      ctx.moveTo(14,-8); ctx.quadraticCurveTo(20,-14,22,-6); ctx.lineTo(20,-2); ctx.quadraticCurveTo(17,-4,14,-2); ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    }
+
     function drawPlane(x,y,angle){
       ctx.save(); ctx.translate(x,y); ctx.rotate(angle);
       ctx.beginPath(); ctx.moveTo(8,0); ctx.lineTo(-6,-4); ctx.lineTo(-3.5,0); ctx.lineTo(-6,4); ctx.closePath();
@@ -3016,13 +3241,31 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
 
       drawCrescent(W*0.12, H*0.14, 10);
 
-      // low dunes
-      ctx.fillStyle = 'rgba('+gold+',0.07)';
+      // dunes — more present now
+      ctx.fillStyle = 'rgba('+gold+',0.13)';
       ctx.beginPath();
-      ctx.moveTo(0,H*0.86);
-      ctx.quadraticCurveTo(W*0.25,H*0.78, W*0.5,H*0.87);
-      ctx.quadraticCurveTo(W*0.75,H*0.96, W,H*0.85);
+      ctx.moveTo(0,H*0.82);
+      ctx.quadraticCurveTo(W*0.25,H*0.72, W*0.5,H*0.84);
+      ctx.quadraticCurveTo(W*0.75,H*0.94, W,H*0.80);
       ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fill();
+      ctx.fillStyle = 'rgba('+gold+',0.09)';
+      ctx.beginPath();
+      ctx.moveTo(0,H*0.92);
+      ctx.quadraticCurveTo(W*0.3,H*0.86, W*0.6,H*0.95);
+      ctx.quadraticCurveTo(W*0.82,H*1.0, W,H*0.90);
+      ctx.lineTo(W,H); ctx.lineTo(0,H); ctx.closePath(); ctx.fill();
+
+      // date palms along the dune line
+      drawDatePalm(W*0.10, H*0.90, 1);
+      drawDatePalm(W*0.16, H*0.93, 0.75);
+      drawDatePalm(W*0.80, H*0.88, 0.9);
+
+      // a camel, walking slowly across the dunes
+      var camelT = (t*0.00022) % 1.4;
+      if(camelT <= 1){
+        var cx = -30 + camelT*(W+60);
+        drawCamel(cx, H*0.91, 1.1, t*0.08);
+      }
 
       // flight path
       ctx.beginPath();
@@ -3033,10 +3276,10 @@ footer{ border-top:1px solid var(--on-night-line); padding:80px 0 34px; backgrou
       // Makkah + Madinah markers, with a soft glow that breathes slowly
       var makkahP = pos(route[2]), madinahP = pos(route[3]);
       var breathe = 0.5 + Math.sin(t*0.012)*0.15;
-      drawGlow(makkahP.x, makkahP.y-4, 34, gold, 0.16*breathe);
-      drawGlow(madinahP.x, madinahP.y-6, 30, green, 0.14*breathe);
-      drawKaaba(makkahP.x, makkahP.y, 1);
-      drawMadinahDome(madinahP.x, madinahP.y, 0.9);
+      drawGlow(makkahP.x, makkahP.y-6, 46, gold, 0.20*breathe);
+      drawGlow(madinahP.x, madinahP.y-8, 40, green, 0.18*breathe);
+      drawKaaba(makkahP.x, makkahP.y, 1.7);
+      drawMadinahDome(madinahP.x, madinahP.y, 1.5);
 
       // the plane, looping the whole journey very slowly
       var loopT = (t*0.0009) % 1;
